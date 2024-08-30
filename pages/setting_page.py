@@ -3,13 +3,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 class SettingPage(Page):
 
     SETTING_BUTTON = (By.CSS_SELECTOR, "a[href='/settings']")
     SETTING_OPTIONS = (By.CSS_SELECTOR, "div.setting-text")
     CONNECT_COMPANY_BUTTON = (By.CSS_SELECTOR, "div.get-free-period.menu")
 
-    def click_setting_button(self):
+    def click_setting(self):
         setting_button = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(self.app.setting_page.SETTING_BUTTON)
         )

@@ -16,7 +16,7 @@ def log_in(context, email, password):
 
 
 @then('Click on settings option')
-def click_settings(context):
+def click_setting(context):
     setting_button = WebDriverWait(context.driver, 10).until(
         EC.element_to_be_clickable(context.app.setting_page.SETTING_BUTTON)
     )
