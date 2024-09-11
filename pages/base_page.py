@@ -11,6 +11,9 @@ class Page:
     def find_element(self, by: By, value: str):
         return self.driver.find_element(by, value)
 
+    def find_elements(self, *locator):
+        return self.driver.find_elements(*locator)
+
     def input_text(self, text: str, by: By, value: str):
         element = self.find_element(by, value)
         element.clear()
@@ -28,3 +31,4 @@ class Page:
 
     def open(self, url: str):
         self.driver.get(url)
+

@@ -7,17 +7,21 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 
 
-def browser_init(context):
-    """
-    :param context: Behave context
-    """
+# def browser_init(context):
+#     """
+#     :param context: Behave context
+#     """
+
+
+# def mobile_driver_init(context, scenario_name):
+
 
 def browser_init(context, scenario_name):
 
     ## CHROM BROWSER ##
-    driver_path = ChromeDriverManager().install()
-    service = Service(driver_path)
-    context.driver = webdriver.Chrome(service=service)
+    # driver_path = ChromeDriverManager().install()
+    # service = Service(driver_path)
+    # context.driver = webdriver.Chrome(service=service)
 
 
     ## FIREFOX BROWSER ##
@@ -41,16 +45,26 @@ def browser_init(context, scenario_name):
     #
     # options = Options()
     # bstack_options = {
-    #     "os": "Windows",
-    #     "osVersion": "11",
-    #     'browserName': 'edge',
+    #     "os": "Android",
+    #     "osVersion": "13",
+    #     "deviceName": "Pixel 7",
+    #     'browserName': 'chrome',
     #     'sessionName': scenario_name
     # }
     # options.set_capability('bstack:options', bstack_options)
     # context.driver = webdriver.Remote(command_executor=url, options=options)
 
 
-    context.driver.maximize_window()
+    ### Mobile emulation ###
+    mobile_emulation = {"deviceName": "Nexus 5"}
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+
+    driver_path = ChromeDriverManager().install()
+    service = Service(driver_path)
+    context.driver = webdriver.Chrome(service=service)
+
+    # context.driver.maximize_window()
     context.driver.implicitly_wait(4)
 
     context.app = Application(context.driver)
@@ -59,6 +73,7 @@ def browser_init(context, scenario_name):
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
     browser_init(context, scenario.name)
+    # mobile_driver_init(context, scenario.name)
 
 
 def before_step(context, step):
@@ -67,6 +82,7 @@ def before_step(context, step):
 
 def after_step(context, step):
     if step.status == 'failed':
+        context.driver.save_screenshot(f'{step}.png')
         print('\nStep failed: ', step)
 
 

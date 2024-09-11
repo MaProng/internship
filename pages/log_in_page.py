@@ -1,5 +1,4 @@
 from time import sleep
-
 from pages.base_page import Page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait

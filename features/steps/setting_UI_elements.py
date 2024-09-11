@@ -1,5 +1,6 @@
 from behave import given, when, then
 from time import sleep
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -13,6 +14,14 @@ def open_main_page(context):
 def log_in(context, email, password):
     context.app.log_in_page.login_user(email, password)
     sleep(5)
+
+
+@then('Click on main menu')
+def click_main_menu(context):
+    main_menu = WebDriverWait(context.driver, 10).until(
+        EC.visibility_of_element_located(context.app.setting_page.MAIN_MENU_BUTTON)
+    )
+    main_menu.click()
 
 
 @then('Click on settings option')
